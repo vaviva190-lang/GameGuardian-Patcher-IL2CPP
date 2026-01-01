@@ -1,4 +1,25 @@
+local Patcher = require("Patcher")
 
+local il2cpp    = Patcher.getBaseAddr("libil2cpp.so")
+local libunity  = Patcher.getBaseAddr("libunity.so")
+
+local p = Patcher.new({
+  title = "Custom Title",
+})
+
+p:add({
+  name    = "Damage Multiplier",
+  address = il2cpp + 0x18643A8,
+  patch   = "01 04 A0 E3 1E FF 2F E1r",
+})
+
+p:add({
+  name    = "HP Multiplier",
+  address = libunity + 0x1864F88,
+  patch   = "01 04 A0 E3 1E FF 2F E1r"
+})
+
+p:run()
 # Patcher 
 
 Patcher is a gameguardian library for patching memory address, it provides a simple interface and handle on/off state of patching.
